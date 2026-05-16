@@ -1,6 +1,6 @@
 
-#ifndef LIST_H
-#define LIST_H
+#ifndef _LIST_H_
+#define _LIST_H_
 
 #include <stdbool.h>
 #include <stddef.h>
@@ -29,6 +29,6 @@ int list_pop_back(List *list, int *out_value);
 
 int list_delete_elem_left(List *list, int elem);
 int list_delete_elem_right(List *list, int elem);
-int list_delete_elements(List *list, int elem); /// @TODO: TO complete
+// int list_delete_elements(List *list, int elem);
 
-#endif /* LIST_H */
+#endif /* _LIST_H_ */

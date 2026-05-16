@@ -1,33 +1,37 @@
-# Makefile for bash
 
-# Directories
+# DIRECTORIES
 BUILD_DIR := build
-OBJ_DIR   := $(BUILD_DIR)/obj
 BIN_DIR   := $(BUILD_DIR)/bin
+OBJ_DIR   := $(BUILD_DIR)/obj
 SRC_DIR   := src
 INC_DIR   := include
 
-# source main
-APP_SRCS := $(SRC_DIR)/main.c 
+# TARGET
+TARGET    := $(BIN_DIR)/main
 
-# Objects
-APP_OBJS := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(APP_SRCS))
-LIB_OBJS := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(filter-out $(APP_SRCS), $(wildcard $(SRC_DIR)/*.c)))
-OBJS     := $(APP_OBJS) $(LIB_OBJS)
+# SOURCES
+APP_SRC   := $(SRC_DIR)/main.c
+LIB_SRCS  := $(filter-out $(APP_SRC), $(wildcard $(SRC_DIR)/*.c))
 
-# main target
-TARGET := $(BIN_DIR)/main.exe
+SRCS      := $(APP_SRC) $(LIB_SRCS)
 
-# Toolchain
-CC     := clang
-CFLAGS := -std=c11 \
-		-Wall -Wextra -Werror -Wpedantic \
-		-fstack-protector-strong -g -o0 -I$(INC_DIR) -MMD -MP
+# OBJECTS
+OBJS      := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
 
-# logic
-all: build run
+# COMPILER
+CC := clang
 
-build: $(TARGET)
+CFLAGS    := -std=c11 \
+		  -Werror -Wextra -Wpedantic \
+		  -fstack-protector-strong -g -o0 \
+		  -I$(INC_DIR) \
+		  -MMD -MP
+
+# DEPENDENCIES
+DEPS := $(OBJS:.o=.d)
+
+# RULES
+all: $(TARGET)
 
 run: $(TARGET)
 	./$(TARGET)
@@ -37,27 +41,22 @@ clean:
 
 re: clean all
 
-# Phony
-.PHONY: all build run clean re
+.PHONY: all run clean re
 
-# folders buiding (order-only)
-$(OBJ_DIR):
-	mkdir -p $(OBJ_DIR)
-
-$(BIN_DIR):
-	mkdir -p $(BIN_DIR)
-
-# sources compilation -> objets
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
-	$(CC) $(CFLAGS) -c $< -o $@
-
-# tests compilation -> objets
-$(OBJ_DIR)/%.o: $(TEST_DIR)/%.c | $(OBJ_DIR)
-	$(CC) $(CFLAGS) -c $< -o $@
-
-# main.exe linking (included main.o + lib objs)
+# LINKING
 $(TARGET): $(OBJS) | $(BIN_DIR)
 	$(CC) $(CFLAGS) $^ -o $@
 
-# include dependance auto-gen
--include $(OBJS:.o=.d) $(TEST_OBJ:.o=.d)
+# COMPILATION
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# DIRECTORIES
+$(BIN_DIR):
+	mkdir -p $@
+
+$(OBJ_DIR):
+	mkdir -p $@
+
+# AUTO DEPENDENCIES
+-include $(DEPS)
