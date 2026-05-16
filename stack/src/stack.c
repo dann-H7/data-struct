@@ -1,13 +1,14 @@
+
 /**
-*@file : stack.c
-*@brief: prototype of function
-*/
+ * @file  : stack.c
+ * @brief : definition of function
+ * @author: Kelvin A.GNANOU
+ * @date  : 2025-11-18 17:40
+ */
 
 #include <stdio.h>
-#include <stdbool.h>
-#include <stddef.h> //NULL, size_t
 #include <stdlib.h> //allo
-#include "..\include\stack.h"
+#include "../include/stack.h"
 
 Stacks def_new_stacks(void){
     return NULL;
