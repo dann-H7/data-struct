@@ -1,8 +1,10 @@
+
+
 #include <stdbool.h> // bool
 #include <stdlib.h>  // calloc
 #include <stdio.h>   // printf, putchar
 
-#include "..\\include\\queue.h"
+#include "../include/queue.h"
 
 /* define a new contact - n'est pas bien en production */
 static Pqueue pfirst = NULL;
@@ -20,7 +22,7 @@ void init_queue(void){
     length_queue = 0;
 }
 
-
+/// @NOTE: (pfirst == NULL) && (plast == NULL) is suffisiant
 bool is_empty_queue(void){
     return (pfirst == NULL) && (plast == NULL) && (length_queue == 0);
 }
@@ -50,21 +52,21 @@ bool enqueue(int new_element){
     return true;
 }
 
-
+/// @NOTE: temp->next = NULL; or pfirst->element = 0; can be deleted
 bool dequeue(void){
     if(is_empty_queue())
         return false;
 
     if(length_queue == 1){
-        pfirst->element = 0; // juste pour vidage
+        pfirst->element = 0;
         free(pfirst);
         pfirst = NULL;
         plast  = NULL;
     } else {
         Pqueue temp = pfirst;
         pfirst = pfirst->next;
-        temp->element = 0; // juste pour vidage
-        temp->next = NULL; // idem
+        temp->element = 0;
+        temp->next = NULL;
         free(temp);
     }
 
