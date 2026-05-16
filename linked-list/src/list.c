@@ -1,3 +1,34 @@
+/**
+ * @file   : list.c
+ * @brief  : 
+ * @author : Kelvin GNANOU
+
+ * @date  : 2026/05/16 10:12
+ * @note  : 
+ * @todo  : 
+    complete list_delete_elements
+    documented API (-1 == LIST_NOT_EXIST...) 
+        and typedef enum {
+            LIST_OK,
+            LIST_ERR_ALLOC,
+            LIST_ERR_EMPTY,
+            LIST_ERR_RANGE
+        } ListStatus;
+    implemente:
+        int list_front(List *list, int *out_value);
+        int list_back(List *list, int *out_value);
+        int list_insert_at(List *list, size_t index, int data);
+        bool list_contains(List *list, int value);
+        int list_find(List *list, int value);
+        int list_get(List *list, size_t index, int *out_value);
+        int list_set(List *list, size_t index, int value);
+        int list_reverse(List *list);
+        int list_sort(List *list);
+        List *list_copy(List *list);
+        int list_concat(List *dest, List *src);
+
+ */
+
 
 #include <stdio.h>
 #include <stdbool.h>
@@ -29,7 +60,7 @@ Node *node_create(int value){
     return node;
 }
 
-/* Public API */
+/* Public APIs */
 List *list_init(void){
     List *list = calloc(1, sizeof(*list));
     if(!list) return NULL;
@@ -45,15 +76,18 @@ List *list_init(void){
 
 void list_destroy(List **list){
     if(!list || !(*list)) return;
+
     list_clear(*list);
+
     free(*list);
     *list = NULL;
 }
 
 
 /* list state */
+/// @NOTE: Head is already suf
 bool is_empty_list(List *list){
-    return !list || (!list->head && !list->tail && !list->size); // NOTE: Head is already suf
+    return !list || (!list->head && !list->tail && !list->size);
 }
 
 
@@ -192,7 +226,7 @@ int list_delete_elem_left(List *list, int elem){
     if(is_empty_list(list)) return 1;
     
     Node *head = list->head;
-    if(list->head == list->tail){ /// @TODO: use epsilone
+    if(list->head == list->tail){
         if(list->head->data != elem) return 2;
 
         Node *node_of_elem = head;
@@ -234,7 +268,7 @@ int list_delete_elem_right(List *list, int elem){
     if(is_empty_list(list)) return 1;
 
     Node *head = list->head;
-    if(list->head == list->tail){ /// @TODO: use epsilone
+    if(list->head == list->tail){
         if(list->head->data != elem) return 2;
 
         Node *node_of_elem = head;
@@ -268,42 +302,44 @@ int list_delete_elem_right(List *list, int elem){
     } else {
         if (node_of_elem == list->tail)
             list->tail = preview;
-        if (preview) /// @NOTE: Can delete this
+        if (preview) // Can delete this
             preview->next = preview->next->next;
     }
+    list->size --;
     free(node_of_elem);
     return 0;
 }
 
+/// @TODO: TO check
+int list_delete_elements(List *list, int elem){
+    if(is_empty_list(list)) return 1;
 
-// int list_delete_elements(List *list, int elem){
-//     if(is_empty_list(list)) return 1;
+    Node *head = list->head;
+    if(list->head == list->tail){ /// @TODO: use epsilone
+        if(list->head->data != elem) return 2;
 
-//     Node *head = list->head;
-//     if(list->head == list->tail){ /// @TODO: use epsilone
-//         if(list->head->data != elem) return 2;
+        Node *node_of_elem = head;
 
-//         Node *node_of_elem = head;
+        list->head = NULL;
+        list->tail = NULL;
+        list->size--; // list->size = 0
 
-//         list->head = NULL;
-//         list->tail = NULL;
-//         list->size--; // list->size = 0
+        free(node_of_elem);
+        return 0;
+    }
 
-//         free(node_of_elem);
-//         return 0;
-//     }
-
-//     Node *preview = NULL;
-//     Node *current = head;
-//     while(current){
-//         Node *element = NULL;
-//         if(current->data == elem){
-//             element = current;
-//             preview->next = current->next;
-//         } else {
-//             preview = current;
-//         }
-//         current = current->next;
-//         free(element);
-//     }    
-// }
+    Node *preview = NULL;
+    Node *current = head;
+    while(current){
+        Node *element = NULL;
+        if(current->data == elem){
+            element = current;
+            preview->next = current->next;
+        } else {
+            preview = current;
+        }
+        current = current->next;
+        free(element);
+    }
+    return -111111;
+}
