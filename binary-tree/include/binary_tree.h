@@ -1,6 +1,6 @@
 
-#ifndef BINARY_TREE
-#define BINARY_TREE
+#ifndef _BINARY_TREE_
+#define _BINARY_TREE_
 
 #include <stddef.h>
 #include <stdbool.h>
@@ -20,10 +20,11 @@ void print_tree(Tree *root, int mode);
 
 /* Getters */
 size_t leaf_numbers(Tree *root);
-size_t tree_depth(Tree *root);
-size_t tree_height(Tree *root);
+size_t node_numbers(Tree *root);
+int tree_height(Tree *root);
 
 /* setters */
+/// @NOTE: data == node->data is not take in to account
 Tree insert_bst(Tree *root, int data);
 
 /* utils */
@@ -31,4 +32,4 @@ Tree create_node(int data);
 void clear_tree(Tree *root);
 bool is_empty_tree(Tree *root);
 
-#endif /* BINARY_TREE */
+#endif /* _BINARY_TREE_ */
