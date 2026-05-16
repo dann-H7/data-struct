@@ -7,6 +7,14 @@
  * @date  : 2026/04/22 19:37
  * @note  : 
  * @todo  : 
+    Tree search_bst(Tree *root, int data); 
+    bool contains(Tree *root, int data);
+    bool remove_bst(Tree *root, int data);
+    Tree min_node(Tree *root);
+    Tree max_node(Tree *root);
+    size_t tree_size(Tree *root);
+    bool is_bst(Tree *root);
+    bool is_bst(Tree *root);   
  */
 
 
@@ -90,7 +98,6 @@ void print_tree(Tree *root, int mode){
             preorder(root); break;
         case 1:
             postorder(root); break;
-        case 0:
         default:
             inorder(root); break;
     }
@@ -116,55 +123,42 @@ size_t leaf_numbers(Tree *root){
     if(is_empty_tree(root))
         return 0;
 
-    if(is_empty_tree(&(*root)->left) + is_empty_tree(&(*root)->right))
+    if(is_empty_tree(&(*root)->left) && is_empty_tree(&(*root)->right))
         return 1;
 
     return leaf_numbers(&(*root)->left) + leaf_numbers(&(*root)->right);
 }
 
 
-size_t tree_depth(Tree *root){
+size_t node_numbers(Tree *root){
     if(is_empty_tree(root)) return 0;
-    return 1 + tree_depth(&(*root)->left) + tree_depth(&(*root)->right);
+    return 1 + node_numbers(&(*root)->left) + node_numbers(&(*root)->right);
 }
 
 
-size_t tree_height(Tree *root){
+int tree_height(Tree *root){
     if(is_empty_tree(root))  return -1;
 
-    size_t height_left  = tree_height(&(*root)->left);
-    size_t height_right = tree_height(&(*root)->right);
+    int height_left  = tree_height(&(*root)->left);
+    int height_right = tree_height(&(*root)->right);
 
     return 1 + (height_left > height_right ? height_left : height_right);
 }
 
 
+/// @NOTE: data == node->data is not take in to account
 Tree insert_bst(Tree *root, int data){
-    if(is_empty_tree(root))
-        return create_node(data); // NOTE: Separe test *root and root == NULL
+    if (!root)
+        return NULL;
+    if(!(*root))
+        return create_node(data);
 
+    Tree node = *root;
 
-    if(data < (*root)->data)
-        (*root)->left = insert_bst(&(*root)->left, data);
-    else if((*root)->data <data)
-        (*root)->right = insert_bst(&(*root)->right, data);
+    if(data < node->data)
+        node->left = insert_bst(&node->left, data);
+    else if(node->data <data)
+        node->right = insert_bst(&node->right, data);
 
     return *root;
 }
-
-
-// int main(void){
-//     puts("Begging...");
-
-//     Tree root   = create_node(10);
-//     root->left  = create_node(5);
-//     root->right = create_node(20);
-
-//     root->left->left = create_node(3);
-//     root->left->right= create_node(7);
-
-//     print_tree(&root, 0);
-    
-//     clear_tree(&root);
-//     return 0;
-// }
