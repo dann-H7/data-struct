@@ -1,73 +1,106 @@
 
-# Data Structures in C / C++
+# 📚 Data Structures in C / C++
 
 [![Status](https://img.shields.io/badge/status-in%20development-orange)]()
 [![Language](https://img.shields.io/badge/language-C%20%7C%20C%2B%2B-blue)]()
 [![License](https://img.shields.io/badge/license-MIT-green)]()
+[![Focus](https://img.shields.io/badge/focus-data%20structures%20%26%20algorithms-purple)]()
 
-> Implémentation progressive de structures de données classiques en **C** et **C++**, avec une approche pédagogique, modulaire et orientée qualité de code.
-
----
-
-## Aperçu
-
-Ce dépôt rassemble plusieurs implémentations de structures de données fondamentales, développées pas à pas pour :
-
-- comprendre les mécanismes internes des structures de données,
-- pratiquer le C et le C++ de manière rigoureuse,
-- construire une base solide pour des projets plus avancés en algorithmique, systèmes et IA,
-- documenter une évolution progressive du code vers une architecture plus propre, plus testable et plus réutilisable.
-
-Le projet est **en cours d’évolution**.  
-Chaque dossier correspond à une implémentation autonome avec son propre `makefile`, ses fichiers d’en-tête, ses sources et un programme de démonstration.
+> Implémentation progressive de structures de données fondamentales en **C** et **C++**, avec une approche pédagogique, modulaire et orientée qualité logicielle.
 
 ---
 
-## Structures disponibles
+## ✨ À propos du projet
+
+Ce dépôt a été conçu pour construire une base technique solide autour des structures de données classiques.
+
+L’objectif n’est pas seulement d’“implémenter du code”, mais de :
+
+- comprendre le comportement interne des structures de données,
+- travailler le bas niveau avec rigueur,
+- renforcer la maîtrise de la mémoire, des pointeurs et de l’organisation modulaire,
+- produire du code lisible, maintenable et évolutif,
+- préparer des bases sérieuses pour des projets plus avancés en algorithmique, systèmes et IA.
+
+Chaque structure est isolée dans son propre dossier avec :
+- ses fichiers d’en-tête,
+- ses sources,
+- son programme de démonstration,
+- son `Makefile`.
+
+---
+
+## 🧠 Objectifs pédagogiques
+
+Ce projet sert à développer les réflexes suivants :
+
+- penser en termes de structure, pas seulement de syntaxe,
+- séparer proprement interface et implémentation,
+- écrire du code simple avant de le rendre plus avancé,
+- mesurer la complexité des opérations,
+- comprendre les compromis entre performance, lisibilité et maintenabilité,
+- adopter une logique d’ingénierie logicielle, pas juste de “code qui marche”.
+
+---
+
+## 🧩 Structures disponibles
 
 ### `basic_queue`
 
 Implémentation d’une file simple.
 
-Fonctionnalités typiques :
+Fonctionnalités visées :
 - insertion en file,
 - suppression en tête,
 - consultation de l’état de la file,
-- affichage de démonstration...
+- affichage de démonstration.
 
 ### `stack`
 
 Implémentation d’une pile.
 
-Fonctionnalités typiques :
+Fonctionnalités visées :
 - empilement,
 - dépilement,
 - lecture du sommet,
-- vérification de vacuité...
+- vérification de vacuité.
 
 ### `linked-list`
 
 Implémentation d’une liste chaînée.
 
-Fonctionnalités typiques :
+Fonctionnalités visées :
 - insertion,
 - suppression,
 - parcours,
-- manipulation de nœuds...
+- manipulation de nœuds.
 
 ### `binary-tree`
 
 Implémentation d’un arbre binaire.
 
-Fonctionnalités typiques :
+Fonctionnalités visées :
 - insertion,
 - parcours,
 - recherche,
-- base pour enrichissements futurs : arbre de recherche, équilibrage, suppression avancée.
+- base pour des améliorations futures : arbre de recherche, suppression avancée, équilibrage.
 
 ---
 
-## Arborescence du dépôt
+
+## ▶️ How to Run
+
+Chaque structure est indépendante:
+
+```bash
+cd stack
+make
+make run
+```
+
+---
+
+## 🗂️ Structure du dépôt
 
 ```bash
 data-struct.git/
@@ -95,12 +128,55 @@ data-struct.git/
 │   └── src
 │       ├── list.c
 │       └── main.c
-├── stack
-│   ├── include
-│   │   └── stack.h
-│   ├── makefile
-│   └── src
-│       ├── main.c
-│       └── stack.c
-└── struct_project_gen.py
+└── stack
+    ├── include
+    │   └── stack.h
+    ├── makefile
+    └── src
+        ├── main.c
+        └── stack.c
 ```
+
+## 🛠️ Tech Stack
+
+C · C++ · Makefile · GCC · Git
+
+---
+
+## ⚙️ Design Principles
+
+- Modular architecture
+- Separation of concerns
+- Manual memory management
+- Reusable components
+
+---
+
+## 📌 What This Project Demonstrates
+
+- Implementation of core data structures from scratch
+- Understanding of pointers and memory handling
+- Modular C project organization
+- Clean and maintainable code structure
+
+---
+
+## 🚀 Future Improvements
+
+- Unit testing framework
+- Performance benchmarks
+- Enhanced error handling
+- Extended APIs for each structure
+
+---
+
+## 📈 Vision
+
+A foundation project evolving toward systems programming, backend engineering, and algorithmic mastery.
+
+
+---
+
+## 📄 License
+
+MIT License — free to use and modify.
